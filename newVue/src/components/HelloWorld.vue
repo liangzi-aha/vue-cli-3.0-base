@@ -5,16 +5,29 @@
     <div>{{this.$store.state.num}}</div>
     <div>{{this.$store.state.data}}</div>
     <button @click="mountion()">改变姓氏</button>
+    <children :name='msg' @childByValue="parent"></children>
+    <p>{{childValue}}</p>
+    <p>{{Bus}}</p>
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 import http from "../http/http.js";
+import children from "@/components/children";
+import bus from '../assets/bus';
+
 export default {
   name: "HelloWorld",
+  components:{
+     children:children,
+  },
   data() {
-    return {};
+    return {
+      msg:'小明',
+      childValue:'',
+      Bus:''
+    };
   },
   compute: {
     ...mapMutations(["changeanme"])
@@ -22,13 +35,18 @@ export default {
   mounted() {
     mapMutations.callCheng;
     console.log(this.$store.state.name);
-    // this.$axios.get('/api/get')
-    //   .then(res=>{
-    //     console.log(res)
-    //   })
-    http.getNewsList()
+    this.$axios.post('/post',{name:'李'})
+      .then(res=>{
+        console.log(res)
+      })
+    http.test()
     .then(res=>{
       console.log(res)
+    })
+    
+    bus.$on('bus',res=>{
+      console.log(res)
+      this.Bus = res
     })
   },
   methods: {
@@ -36,10 +54,10 @@ export default {
       this.$store.commit("changeanme", "李");
       this.$store.dispatch("callAdd", 20);
       this.$store.getters.callCheng;
+    },
+    parent(res){
+      this.childValue = res;
     }
-  },
-  props: {
-    msg: String
   }
 };
 </script>

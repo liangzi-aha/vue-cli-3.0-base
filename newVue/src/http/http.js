@@ -22,7 +22,7 @@ axios.interceptors.response.use((config) => {
         // 跳转到404页面
         router.push({ path: '/404' })
     }
-    return config;
+    return config.data;
 }, (err) => {
     // 错误我们返回一个Promise对象
     return Promise.reject(err)
@@ -62,7 +62,7 @@ export function post(url, param) {
 
 export default {
     //所有接口
-    getNewsList(params) {
+    test(params) {
         return get('/get', params)
     }
 }
