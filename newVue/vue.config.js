@@ -1,3 +1,4 @@
+//获取当前vue当前的模式 （开发模式，生产模块）
 console.log(process.env.NODE_ENV)
 
 module.exports = {
